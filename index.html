@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: yellow;
+        }
+
+        form {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: gray;
+            border-radius: 8px;
+            margin-top: 110px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: black;
+            color: whitesmoke;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        p.error {
+            color: #ff0000;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form" onsubmit="return validateForm()">
+        <label for="fullname">Full Name:</label><br>
+        <input type="text" id="fullname" name="fullname" onchange="validateName()"><br>
+        <p id="fullnameError"></p>
+
+        <label for="email">Email ID:</label><br>
+        <input type="email" id="email" name="email" onchange="validateEmail()"><br>
+        <p id="emailError"></p>
+
+        <label for="phonenumber">Phone Number:</label><br>
+        <input type="text" id="phonenumber" name="phonenumber" onchange="validatePhoneNumber()"><br>
+        <p id="phonenumberError"></p>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" onchange="validatePassword()"><br>
+        <p id="passwordError"></p>
+
+        <label for="confirm_password">Confirm Password:</label><br>
+        <input type="password" id="confirm_password" name="confirm_password" onchange="validateConfirmPassword()"><br>
+        <p id="confirmPasswordError"></p>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        function validateForm() {
+            let fullname = document.getElementById('fullname').value;
+            let email = document.getElementById('email').value;
+            let phonenumber = document.getElementById('phonenumber').value;
+            let password = document.getElementById('password').value;
+            let confirmPassword = document.getElementById('confirm_password').value;
+            let fullnameError = document.getElementById('fullnameError');
+            let emailError = document.getElementById('emailError');
+            let phonenumberError = document.getElementById('phonenumberError');
+            let passwordError = document.getElementById('passwordError');
+            let confirmPasswordError = document.getElementById('confirmPasswordError');
+
+            let isValid = true;
+
+            if (fullname.length < 5) {
+                fullnameError.textContent = 'Name must not be less than 5 characters';
+                isValid = false;
+            } else {
+                fullnameError.textContent = '';
+            }
+
+            if (!email.includes('@')) {
+                emailError.textContent = 'Enter correct email';
+                isValid = false;
+            } else {
+                emailError.textContent = '';
+            }
+
+            if (phonenumber === '123456789' || phonenumber.length !== 10) {
+                phonenumberError.textContent = 'Enter correct phone number';
+                isValid = false;
+            } else {
+                phonenumberError.textContent = '';
+            }
+
+            if (password === 'password' || password.toLowerCase() === fullname.toLowerCase() || password.length < 8) {
+                passwordError.textContent = 'Password should not be password or Username';
+                isValid = false;
+            } else {
+                passwordError.textContent = '';
+            }
+
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = 'Passwords do not match';
+                isValid = false;
+            } else {
+                confirmPasswordError.textContent = '';
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>
